@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .bookmark {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fefefe;
+        }
+
+        .bookmark h2 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+
+        .bookmark-details {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+
+        .bookmark-details li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .progress-bar {
+            background-color: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar div {
+            height: 10px;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .actions {
+            text-align: left;
+        }
+
+        .actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .actions button:hover {
+            background-color: #45a049;
+        }
+
+        .add-book {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .add-book a {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .add-book a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Universal Bookmark</h1>
+    </header>
+    <div class="container">
+        <div class="add-book">
+            <a href="/bookmarks/{{ id }}/add">Add New Book</a>
+        </div>
+        <div class="bookmark">
+            {% for book in books %}
+            <div>
+                <ul class="bookmark-details">
+                    <li><strong>Title:</strong> {{ book.title }}</li>
+                    <li><strong>Pages read:</strong> {{ book.current_page }} / {{ book.total_pages }}</li>
+                    <li><strong>Last read:</strong> {{ book.modified_at }}</li>
+                </ul>
+                <div class="actions">
+                    <button><a style="text-decoration: none;" href="/bookmarks/{{ id }}/edit/{{ book.id }}">Edit</a></button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
