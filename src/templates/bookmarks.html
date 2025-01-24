@@ -123,7 +123,7 @@
                 <ul class="bookmark-details">
                     <li><strong>Title:</strong> {{ book.title }}</li>
                     <li><strong>Pages read:</strong> {{ book.current_page }} / {{ book.total_pages }}</li>
-                    <li><strong>Last read:</strong> {{ book.modified_at }}</li>
+                    <li><strong>Last read:</strong> {{ book.last_read_at }}</li>
                 </ul>
                 <div class="actions">
                     <button><a style="text-decoration: none;" href="/bookmarks/{{ id }}/edit/{{ book.id }}">Edit</a></button>
