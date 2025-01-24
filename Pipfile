@@ -4,11 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "==0.115.6"
-tortoise-orm = {extras = ["aiosqlite"], version="0.23.0"}
+fastapi = {extras = ["standard"], version="*"}
 jinja2 = "==3.1.5"
 uvicorn = "==0.34.0"
 python-multipart = "==0.0.20"
+tortoise-orm = "==0.24.0"
+aiosqlite = "==0.20.0"
 
 [dev-packages]
 ipdb = "*"
