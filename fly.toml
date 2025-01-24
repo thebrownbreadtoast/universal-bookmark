@@ -1,0 +1,20 @@
+# fly.toml app configuration file generated for universal-bookmark on 2025-01-25T03:45:08+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'universal-bookmark'
+primary_region = 'ams'
+
+[build]
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
