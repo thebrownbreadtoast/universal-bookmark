@@ -21,4 +21,4 @@ primary_region = 'ams'
 
 [mounts]
   source = "universal_bookmark_vol"
-  destination = "/app"
+  destination = "/mnt"
