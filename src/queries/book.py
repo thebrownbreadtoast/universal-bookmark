@@ -1,3 +1,4 @@
+from datetime import datetime
 from tortoise import exceptions
 
 from src.models import Book
@@ -15,4 +16,15 @@ async def create_book(title: str, current_page: int, total_pages: int, bookmark_
 
 
 async def update_book(id: str, title: str, current_page: int, total_pages: int):
-    return await Book.filter(id=id).update(title=title, current_page=current_page, total_pages=total_pages)
+    book = await get_book(id)
+
+    if not book:
+        return None
+
+    book.title = title
+    book.current_page = current_page
+    book.total_pages = total_pages
+
+    await book.save()
+
+    return book

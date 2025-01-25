@@ -1,3 +1,5 @@
+import pytz
+
 from src.models.base import BaseModel
 from tortoise import fields
 
@@ -11,7 +13,9 @@ class Book(BaseModel):
     bookmark = fields.ForeignKeyField('models.Bookmark', related_name='books')
 
     def last_read_at(self) -> str:
-        return self.updated_at.strftime('%d-%b-%Y %I:%M:%S %p')
+        ist_tz = pytz.timezone('Asia/Kolkata')
+
+        return self.updated_at.astimezone(ist_tz).strftime('%d-%b-%Y %I:%M %p')
 
     def __str__(self):
         return f"{self.title} ({self.current_page}/{self.total_pages})"
