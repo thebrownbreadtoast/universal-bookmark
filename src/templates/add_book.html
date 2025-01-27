@@ -65,9 +65,9 @@
         }
 
         label {
-            font-weight: 500;
             margin-bottom: 0.5rem;
-            color: var(--text-color);
+            color: var(--secondary-color);
+            font-weight: bold;
         }
 
         input, button {
@@ -119,10 +119,10 @@
             <input type="text" id="title" name="title" placeholder="Enter the book title" required>
 
             <label for="current_page">Current Page</label>
-            <input type="number" id="current_page" name="current_page" placeholder="0" required>
+            <input type="number" id="current_page" name="current_page" placeholder="Current page no." required>
 
             <label for="total_pages">Total Pages</label>
-            <input type="number" id="total_pages" name="total_pages" placeholder="0" required>
+            <input type="number" id="total_pages" name="total_pages" placeholder="Total page count" required>
 
             <button type="submit">Save</button>
         </form>
