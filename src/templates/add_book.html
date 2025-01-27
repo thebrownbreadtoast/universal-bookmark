@@ -5,11 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Book</title>
     <style>
+        /* Base Styling */
+        :root {
+            --primary-color: #333333; /* Dark Gray */
+            --secondary-color: #666A86; /* Slate Blue */
+            --accent-color: #95B8D1; /* Light Blue */
+            --highlight-color: #E8DDB5; /* Light Sand */
+            --background-color: #EDAFB8; /* Soft Pink */
+            --text-color: #FFFFFF; /* White */
+            --font-family: 'Inter', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--font-family);
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            color: var(--highlight-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
         }
 
         .container {
@@ -17,13 +48,15 @@
             margin: 2rem auto;
             padding: 2rem;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        .container h1 {
             text-align: center;
-            color: #333;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         form {
@@ -32,44 +65,70 @@
         }
 
         label {
+            font-weight: 500;
             margin-bottom: 0.5rem;
-            color: #555;
+            color: var(--text-color);
         }
 
-        input, textarea, button {
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        input, button {
+            padding: 0.75rem;
+            border-radius: 8px;
             font-size: 1rem;
+            border: 1px solid var(--secondary-color);
+            margin-bottom: 1.25rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px var(--accent-color);
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             color: white;
+            border: none;
+            font-weight: 600;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--highlight-color);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Universal Bookmark</h1>
+    </header>
     <div class="container">
-        <h1>Add Book</h1>
-        <form action="/bookmarks/{{ id }}/add" method="POST">
+        <h1>Add New Book</h1>
+        <form action="{{ url_for('add_book', id=id) }}" method="POST">
             <label for="title">Book Title</label>
             <input type="text" id="title" name="title" placeholder="Enter the book title" required>
 
-            <label for="current_page">Current page</label>
+            <label for="current_page">Current Page</label>
             <input type="number" id="current_page" name="current_page" placeholder="0" required>
 
-            <label for="total_pages">Total pages</label>
+            <label for="total_pages">Total Pages</label>
             <input type="number" id="total_pages" name="total_pages" placeholder="0" required>
 
             <button type="submit">Save</button>
         </form>
     </div>
+    <footer>
+        &copy; No rights reserved.
+    </footer>
 </body>
 </html>

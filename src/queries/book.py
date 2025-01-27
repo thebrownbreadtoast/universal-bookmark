@@ -15,10 +15,13 @@ async def create_book(title: str, current_page: int, total_pages: int, bookmark_
     return await Book.create(title=title, current_page=current_page, total_pages=total_pages, bookmark_id=bookmark_id)
 
 
-async def update_book(id: str, title: str, current_page: int, total_pages: int):
+async def update_book(bookmark_id: str, id: str, title: str, current_page: int, total_pages: int):
     book = await get_book(id)
 
     if not book:
+        return None
+    
+    if str(book.bookmark_id) != bookmark_id:
         return None
 
     book.title = title
@@ -28,3 +31,10 @@ async def update_book(id: str, title: str, current_page: int, total_pages: int):
     await book.save()
 
     return book
+
+
+async def destroy_book(bookmark_id: str, id: str):
+    try:
+        return await Book.get(id=id, bookmark_id=bookmark_id).delete()
+    except exceptions.DoesNotExist:
+        return None

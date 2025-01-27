@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from tortoise import Tortoise
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from src.queries.book import get_book, create_book, update_book
+from src.queries.book import get_book, create_book, update_book, destroy_book
 from src.queries.bookmarks import get_bookmark
 from src.serializers import Bookmark_Pydantic, Book_Pydantic
 
@@ -14,7 +14,7 @@ from src.serializers import Bookmark_Pydantic, Book_Pydantic
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await Tortoise.init(
-        db_url='sqlite:///mnt/db.sqlite3',
+        db_url='sqlite://db.sqlite3',
         modules={'models': ['src.models']}
     )
 
@@ -77,6 +77,13 @@ async def edit_book_form(request: Request, id: str, book_id: str):
 
 @app.post('/bookmarks/{id}/edit/{book_id}', response_class=RedirectResponse)
 async def edit_book(request: Request, id: str, book_id: str, title: Annotated[str, Form()], current_page: Annotated[int, Form()], total_pages: Annotated[int, Form()]):
-    await update_book(book_id, title, current_page, total_pages)
+    await update_book(id, book_id, title, current_page, total_pages)
+
+    return RedirectResponse(url=f'/bookmarks/{id}', status_code=status.HTTP_303_SEE_OTHER)
+
+
+@app.post('/bookmarks/{id}/delete/{book_id}', response_class=RedirectResponse)
+async def delete_book(request: Request, id: str, book_id: str):
+    await destroy_book(id, book_id)
 
     return RedirectResponse(url=f'/bookmarks/{id}', status_code=status.HTTP_303_SEE_OTHER)
