@@ -14,7 +14,7 @@ from src.serializers import Bookmark_Pydantic, Book_Pydantic
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await Tortoise.init(
-        db_url='sqlite://db.sqlite3',
+        db_url='sqlite:///mnt/db.sqlite3',
         modules={'models': ['src.models']}
     )
 
