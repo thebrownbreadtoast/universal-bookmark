@@ -1,7 +1,7 @@
-from datetime import datetime
 from tortoise import exceptions
 
 from src.models import Book
+from src.queries.bookmarks import update_last_read
 
 
 async def get_book(id: str):
@@ -29,6 +29,8 @@ async def update_book(bookmark_id: str, id: str, title: str, current_page: int, 
     book.total_pages = total_pages
 
     await book.save()
+
+    await update_last_read(bookmark_id)
 
     return book
 

@@ -4,7 +4,6 @@ from fastapi import FastAPI, Request, status, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from tortoise import Tortoise
-from tortoise.contrib.pydantic import pydantic_model_creator
 
 from src.queries.book import get_book, create_book, update_book, destroy_book
 from src.queries.bookmarks import get_bookmark
@@ -34,6 +33,8 @@ async def bookmarks(request: Request, id: str):
 
     if not bookmark:
         return RedirectResponse(url='/', status_code=status.HTTP_404_NOT_FOUND)
+
+    await bookmark.compute_and_update_streak_length()
 
     bookmark_serializer_obj = await Bookmark_Pydantic.from_tortoise_orm(bookmark)
 

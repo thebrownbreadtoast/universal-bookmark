@@ -203,12 +203,52 @@
             background-color: #B5242F;
             transform: scale(1.05);
         }
+
+        .streak-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .streak-count {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .streak-label {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .streak-calendar {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .streak-day {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background-color: var(--secondary-color);
+        }
+
+        .streak-day.active {
+            background-color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Universal Bookmark</h1>
     </header>
+
+    <div class="streak-container">
+        <div class="streak-count">{{ streak_length }} {{'🔥' if streak_length else '😢'}}	</div>
+        <div class="streak-label">Day{{ 's' if streak_length > 1 else '' }} of reading streak</div>
+    </div>
+
     <div class="container">
         <!-- Add New Book Button -->
         <div class="add-book">
