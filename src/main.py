@@ -34,7 +34,7 @@ async def bookmarks(request: Request, id: str):
     if not bookmark:
         return RedirectResponse(url='/', status_code=status.HTTP_404_NOT_FOUND)
 
-    await bookmark.compute_and_update_streak_length()
+    await bookmark.check_and_reset_streak_length()
 
     bookmark_serializer_obj = await Bookmark_Pydantic.from_tortoise_orm(bookmark)
 
