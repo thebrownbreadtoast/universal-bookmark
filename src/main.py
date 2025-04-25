@@ -61,6 +61,15 @@ async def add_book(request: Request, id: str,  title: Annotated[str, Form()], cu
     return RedirectResponse(url=f'/bookmarks/{id}', status_code=status.HTTP_303_SEE_OTHER)
 
 
+@app.get('/bookmarks/{id}/view/{book_id}/logs', response_class=HTMLResponse)
+async def view_book_logs(request: Request, id: str, book_id: str):
+    book = await get_book(book_id)
+
+    book_serializer_obj = await Book_Pydantic.from_tortoise_orm(book)
+
+    return templates.TemplateResponse(request=request, name="book_logs.html", context=book_serializer_obj.dict())
+
+
 @app.get('/bookmarks/{id}/edit/{book_id}', response_class=HTMLResponse)
 async def edit_book_form(request: Request, id: str, book_id: str):
     book = await get_book(book_id)
@@ -77,8 +86,8 @@ async def edit_book_form(request: Request, id: str, book_id: str):
 
 
 @app.post('/bookmarks/{id}/edit/{book_id}', response_class=RedirectResponse)
-async def edit_book(request: Request, id: str, book_id: str, title: Annotated[str, Form()], current_page: Annotated[int, Form()], total_pages: Annotated[int, Form()]):
-    await update_book(id, book_id, title, current_page, total_pages)
+async def edit_book(request: Request, id: str, book_id: str, title: Annotated[str, Form()], current_page: Annotated[int, Form()], total_pages: Annotated[int, Form()], note: Annotated[str, Form()]):
+    await update_book(id, book_id, title, current_page, total_pages, note)
 
     return RedirectResponse(url=f'/bookmarks/{id}', status_code=status.HTTP_303_SEE_OTHER)
 

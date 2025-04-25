@@ -25,3 +25,25 @@ class Book(BaseModel):
     
     class PydanticMeta:
         computed = ['last_read_at',]
+
+
+class BookLog(BaseModel):
+    start_page = fields.IntField(default=0)
+    end_page = fields.IntField(default=0)
+    note = fields.TextField(default='')
+
+    book = fields.ForeignKeyField('models.Book', related_name='book_logs')
+
+    def logged_at(self) -> str:
+        ist_tz = pytz.timezone('Asia/Kolkata')
+
+        return self.created_at.astimezone(ist_tz).strftime('%d-%b-%Y %I:%M %p')
+
+    def __str__(self):
+        return f"{self.book.title} {self.note[:10]}..."
+
+    class Meta:
+        ordering = ['-created_at']
+
+    class PydanticMeta:
+        computed = ['logged_at',]

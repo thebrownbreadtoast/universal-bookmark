@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book</title>
+    <style>
+        /* Base Styling */
+        :root {
+            --primary-color: #333333; /* Dark Gray */
+            --secondary-color: #666A86; /* Slate Blue */
+            --accent-color: #95B8D1; /* Light Blue */
+            --highlight-color: #E8DDB5; /* Light Sand */
+            --background-color: #EDAFB8; /* Soft Pink */
+            --text-color: #FFFFFF; /* White */
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            color: var(--highlight-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--accent-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+
+         /* Go back Button */
+         .go-back {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .go-back a {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-back a:hover {
+            background-color: #222222; /* Darker Gray */
+            transform: scale(1.05);
+        }
+
+        /* Logs - Consistent with bookmark cards */
+        .log {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--secondary-color);
+            border-radius: 12px;
+            background-color: var(--background-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .log:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .log-details {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0;
+        }
+
+        .log-details li {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: var(--highlight-color);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Universal Bookmark</h1>
+    </header>
+    <div class="container">
+        <h1>"{{ title  }}" reading logs</h1>
+        {% if book_logs %}
+            {% for log in book_logs %}
+                <div class="log">
+                    <ul class="log-details">
+                        <li><strong>Start page: </strong>{{  log.start_page  }}</li>
+                        <li><strong>End page: </strong>{{  log.end_page  }}</li>
+                        <li><strong>Read at: </strong>{{  log.logged_at  }}</li>
+                        <li><strong>Note: </strong>{{  log.note  }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+        {% else %}
+                <div class="log">
+                    <p style="text-align: center;">No reading logs found.</p>
+                </div>
+        {% endif %}
+
+        <div class="go-back">
+            <a href="{{ url_for('bookmarks', id=bookmark.id) }}">Go back</a>
+        </div>
+    </div>
+    <footer>
+        &copy; No rights reserved.
+    </footer>
+</body>
+</html>
