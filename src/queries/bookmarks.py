@@ -19,10 +19,10 @@ async def update_last_read(bookmark_id: str) -> Bookmark:
 
     today = datetime.now(timezone.utc)
 
+    await bookmark.compute_and_update_streak_length()
+
     bookmark.last_read_at = today
 
     await bookmark.save(update_fields=["last_read_at",])
-
-    await bookmark.compute_and_update_streak_length()
 
     return bookmark
