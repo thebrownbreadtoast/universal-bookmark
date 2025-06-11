@@ -23,6 +23,6 @@ async def update_last_read(bookmark_id: str) -> Bookmark:
 
     bookmark.last_read_at = today
 
-    await bookmark.save(update_fields=["last_read_at",])
+    await bookmark.save()
 
     return bookmark

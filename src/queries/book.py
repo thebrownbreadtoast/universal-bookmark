@@ -12,7 +12,12 @@ async def get_book(id: str):
 
 
 async def create_book(title: str, current_page: int, total_pages: int, bookmark_id: str):
-    return await Book.create(title=title, current_page=current_page, total_pages=total_pages, bookmark_id=bookmark_id)
+    book = await Book.create(title=title, current_page=current_page, total_pages=total_pages, bookmark_id=bookmark_id)
+
+    if current_page:
+        await update_last_read(bookmark_id)
+
+    return book
 
 
 async def create_book_log(book_id: str, start_page: int, end_page: int, note: str = ""):

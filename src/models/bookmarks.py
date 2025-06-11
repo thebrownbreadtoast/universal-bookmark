@@ -15,19 +15,19 @@ class Bookmark(BaseModel):
         current_streak_length = self.streak_length
 
         if self.last_read_at:
-            time_delta_since_last_read = (today.date() - self.last_read_at.date())
+            time_delta_since_last_read = (today.date() - self.last_read_at.date()).days
 
-            if (time_delta_since_last_read.days == 0):
+            if (time_delta_since_last_read == 0):
                 self.streak_length = (self.streak_length or 1)
-            elif (time_delta_since_last_read.days == 1):
+            elif (time_delta_since_last_read == 1):
                 self.streak_length += 1
             else:
-                self.streak_length = 0
+                self.streak_length = 1
         else:
             self.streak_length = 0
 
         if current_streak_length != self.streak_length:
-            await self.save(update_fields=["streak_length",])
+            await self.save()
 
         return self.streak_length
 
@@ -45,6 +45,6 @@ class Bookmark(BaseModel):
             self.streak_length = 0
 
         if current_streak_length != self.streak_length:
-            await self.save(update_fields=["streak_length",])
+            await self.save()
 
         return self.streak_length
