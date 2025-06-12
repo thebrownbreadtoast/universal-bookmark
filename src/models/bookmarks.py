@@ -14,7 +14,7 @@ class Bookmark(BaseModel):
     async def compute_and_update_streak_length(self) -> int:
         local_tz = pytz.timezone('Asia/Kolkata')
 
-        today = local_tz.localize(datetime.now()).date()
+        today = datetime.today().astimezone(local_tz).date()
 
         current_streak_length = self.streak_length
 
@@ -40,7 +40,7 @@ class Bookmark(BaseModel):
     async def check_and_reset_streak_length(self) -> int:
         local_tz = pytz.timezone('Asia/Kolkata')
 
-        today = local_tz.localize(datetime.now()).date()
+        today = datetime.today().astimezone(local_tz).date()
 
         current_streak_length = self.streak_length
 
