@@ -3,157 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Book</title>
-    <style>
-        :root {
-            --primary-color: #333333; /* Dark Gray */
-            --secondary-color: #666A86; /* Slate Blue */
-            --accent-color: #95B8D1; /* Light Blue */
-            --highlight-color: #E8DDB5; /* Light Sand */
-            --background-color: #EDAFB8; /* Soft Pink */
-            --text-color: #FFFFFF; /* White */
-            --font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            font-family: var(--font-family);
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-
-        h1, h2, h3 {
-            margin: 0;
-            color: var(--highlight-color);
-        }
-
-        /* Header */
-        header {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            text-align: center;
-            padding: 2rem 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .container h1 {
-            text-align: center;
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-            font-weight: bold;
-        }
-
-        input, button {
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            border: 1px solid var(--secondary-color);
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 4px var(--accent-color);
-        }
-
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        button:hover {
-            background-color: var(--accent-color);
-            transform: scale(1.05);
-        }
-
-        /* Footer */
-            footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            color: var(--highlight-color);
-            font-size: 0.9rem;
-        }
-    </style>
+    <title>Edit Book — Universal Bookmark</title>
+    <link rel="stylesheet" href="/static/base.css">
 </head>
 <body>
-    <header>
-        <h1>Universal Bookmark</h1>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a href="/bookmarks/{{ id }}" class="header-back">&#8592; Library</a>
+            <span class="site-title">Universal Bookmark</span>
+        </div>
     </header>
-    <div class="container">
-        <h1>Edit Book</h1>
-        <form action="/bookmarks/{{ id }}/edit/{{ book.id }}" method="POST">
-            <label for="title">Book Title</label>
-            <input 
-                type="text" 
-                id="title" 
-                name="title" 
-                placeholder="Enter the book title" 
-                value="{{ book.title }}" 
-                required>
 
-            <label for="current_page">Current Page</label>
-            <input 
-                type="number" 
-                id="current_page" 
-                name="current_page" 
-                placeholder="0" 
-                value="{{ book.current_page }}" 
-                required>
+    <main class="page-wrapper">
+        <div class="form-card">
+            <h2 class="form-card-title">Log Reading Session</h2>
+            <form action="/bookmarks/{{ id }}/edit/{{ book.id }}" method="POST">
+                <div class="form-group">
+                    <label for="title">Book Title</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value="{{ book.title }}"
+                        required>
+                </div>
 
-            <label for="total_pages">Total Pages</label>
-            <input 
-                type="number" 
-                id="total_pages" 
-                name="total_pages" 
-                placeholder="0" 
-                value="{{ book.total_pages }}" 
-                required>
+                <div class="form-group">
+                    <label for="current_page">Current Page</label>
+                    <input
+                        type="number"
+                        id="current_page"
+                        name="current_page"
+                        value="{{ book.current_page }}"
+                        min="0"
+                        required>
+                </div>
 
-            <label for="note">Note</label>
-            <input
-                type="text"
-                id="note"
-                name="note"
-                placeholder="Enter reading session note here..."
-                value="">
+                <div class="form-group">
+                    <label for="total_pages">Total Pages</label>
+                    <input
+                        type="number"
+                        id="total_pages"
+                        name="total_pages"
+                        value="{{ book.total_pages }}"
+                        min="1"
+                        required>
+                </div>
 
-            <button type="submit">Save</button>
-        </form>
-    </div>
-    <footer>
-        &copy; No rights reserved.
-    </footer>
+                <div class="form-group">
+                    <label for="note">Reading Note</label>
+                    <textarea
+                        id="note"
+                        name="note"
+                        class="note-field"
+                        placeholder="Jot down your thoughts on today's reading..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Session</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

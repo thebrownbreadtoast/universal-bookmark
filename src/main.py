@@ -2,6 +2,7 @@ from typing import Annotated
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from tortoise import Tortoise
 
@@ -23,6 +24,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
 templates = Jinja2Templates(directory="src/templates")
 
